@@ -4,9 +4,10 @@ import fastify from 'fastify';
 
 const main = async () => {
   const response = await fetchOpus('1133181564352462851');
-  const module_content = response.data.item.modules.find((module) => module.module_type === 'MODULE_TYPE_CONTENT')?.module_content;
+  const module_content = response.data?.item?.modules?.find((module) => module.module_type === 'MODULE_TYPE_CONTENT')?.module_content;
   if (!module_content) {
-    throw new Error('Module content not found');
+    console.error('Module content not found, check opus id and cookie settings');
+    return;
   }
   const html = renderParagraphs(module_content?.paragraphs as Paragraph[]);
   console.log(html);
